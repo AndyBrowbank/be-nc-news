@@ -13,16 +13,20 @@ const baseConfig = {
 const customConfig = {
   development: {
     connection: {
-      database: 'nc_news'
-      // user,
-      // password
+      host: 'localhost',
+      port: 5432,
+      database: 'nc_news_test',
+      user: 'andrew',
+      password: 'password'
     }
   },
   test: {
     connection: {
-      database: 'nc_news_test'
-      // user,
-      // password
+      host: 'localhost',
+      port: 5432,
+      database: 'nc_news_test',
+      user: 'andrew',
+      password: 'password'
     }
   }
 };
