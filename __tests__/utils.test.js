@@ -129,7 +129,7 @@ describe('formatDates', () => {
   });
 });
 
-describe.only('makeRefObj', () => {
+describe('makeRefObj', () => {
   test('returns empty object when passed empty array', () => {
     const input = [];
     const expected = {};
@@ -147,4 +147,26 @@ describe.only('makeRefObj', () => {
   });
 }); 
 
-describe('formatComments', () => {});
+describe('formatComments', () => {
+  test('returns an empty array when passed empty array and obj', () => {
+    expect(formatComments([], {})).toEqual([]);
+  });
+  test('converts array of comments object and ref obj to new array of formatted comments', () => {
+    const articleRef = {A:1};
+    const input = [{
+      body: 'The owls are not what they seem.',
+      belongs_to: "They're not exactly dogs, are they?",
+      created_by: 'icellusedkars',
+      votes: 20,
+      created_at: 1006778163389,
+    }];
+    const expected = [{
+      body: 'The owls are not what they seem.',
+      article_id: 1,
+      author: 'icellusedkars',
+      votes: 20,
+      created_at: new Date(1006778163389),
+    }];
+    expect(formatComments(input, articleRef)).toEqual(expected);
+  });
+});

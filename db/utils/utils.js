@@ -26,4 +26,17 @@ console.log(lookupObj)
  return lookupObj
 };
 
-exports.formatComments = (comments, articleRef) => {};
+exports.formatComments = (comments, articleRef) => {
+  const formattedComments = {}
+  return comments.map(comment=>{
+    formattedComments.body = comment.body;
+    formattedComments.article_id=articleRef.A;//not correct 
+    formattedComments.author=comment.created_by;
+    formattedComments.votes=comment.votes;
+    formattedComments.created_at=new Date(comment.created_at)
+console.log(formattedComments)
+
+return formattedComments
+  })
+
+};
