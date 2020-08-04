@@ -3,7 +3,7 @@ const {
   articleData,
   commentData,
   userData
-} = require('../data/test-data');
+} = require('../data/test-data');// had to change this to test-data otherwise error with dev-data
 
 const { formatDates, formatComments, makeRefObj } = require('../utils/utils');
 
