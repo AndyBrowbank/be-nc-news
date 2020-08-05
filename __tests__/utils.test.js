@@ -4,7 +4,7 @@ const {
   formatComments,
 } = require('../db/utils/utils');
 
-describe('formatDates', () => {
+describe.skip('formatDates', () => {
   test('returns an empty array when passed an empty array', () => {
     expect(formatDates([])).toEqual([])
   });
@@ -129,7 +129,7 @@ describe('formatDates', () => {
   });
 });
 
-describe('makeRefObj', () => {
+describe.skip('makeRefObj', () => {
   test('returns empty object when passed empty array', () => {
     const input = [];
     const expected = {};
@@ -147,12 +147,12 @@ describe('makeRefObj', () => {
   });
 }); 
 
-describe('formatComments', () => {
+describe.skip('formatComments', () => {
   test('returns an empty array when passed empty array and obj', () => {
     expect(formatComments([], {})).toEqual([]);
   });
   test('converts array of comments object and ref obj to new array of formatted comments', () => {
-    const articleRef = {A:1};
+    const articleRef = {"They're not exactly dogs, are they?":1};
     const input = [{
       body: 'The owls are not what they seem.',
       belongs_to: "They're not exactly dogs, are they?",

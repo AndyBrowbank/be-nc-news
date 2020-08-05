@@ -20,21 +20,22 @@ exports.makeRefObj = list => {
   list.map(item=>{
 const key = item.title
 lookupObj[key]  = item.article_id
-console.log(lookupObj)
+ 
  
 })  
  return lookupObj
 };
 
 exports.formatComments = (comments, articleRef) => {
-  const formattedComments = {}
+ 
   return comments.map(comment=>{
+    const formattedComments = {}
     formattedComments.body = comment.body;
-    formattedComments.article_id=articleRef.A;//not correct 
+    formattedComments.article_id=articleRef[comment.belongs_to]
     formattedComments.author=comment.created_by;
     formattedComments.votes=comment.votes;
     formattedComments.created_at=new Date(comment.created_at)
-console.log(formattedComments)
+ 
 
 return formattedComments
   })

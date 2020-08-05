@@ -24,4 +24,21 @@ describe.only('/api', () => {
             .expect(200)
         });
     });
+    describe('/users', () => {
+        test('responds with the requested user and a 200', () => {
+            return request(app)
+            .get("/api/users/icellusedkars")
+            .expect(200)
+            .then(res=> {  
+             expect(res.body).toEqual({
+                        user :{
+                        username: "icellusedkars",
+                        avatar_url: "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
+                        name: "sam"
+                    }
+                }
+                )
+            })
+        }); 
+    });
     });
