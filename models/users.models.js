@@ -1,13 +1,18 @@
 const connection = require("../db/connection"); //knex
-const { request } = require("express");
+ 
 
-exports.getAllUsers = ()=> {
+exports.getAllUsers = (username)=> {
     
       
     return connection("users")
-    .select("*")
+    .where('username', username)
     .then(users=>{
-        return users
+        if (users.length===0) {
+        return Promise.reject({status: 404, msg: "404 bad request"})
+        }
+        else{
+            return users[0]
+        }
     })
    
 }

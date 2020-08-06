@@ -1,5 +1,10 @@
 const ENV = process.env.NODE_ENV || 'development';
 
+const log = console.log;
+console.log = (...args) => {
+  if (!/FsMigrations/.test(args[0])) log(...args);
+};
+
 const baseConfig = {
   client: 'pg',
   migrations: {
