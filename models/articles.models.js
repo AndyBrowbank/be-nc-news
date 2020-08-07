@@ -4,11 +4,11 @@ exports.getArticle = (article_id)=> {
 
 
     return connection("articles")
-    .first("articles.*")
+    .select("articles.*")
     .from("articles")
     .where('articles.article_id', "=", article_id)
     .count({comment_count: 'comment_id'})
-    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id")
     .then(articles=>{ console.log("in articles model")
         if (articles.length===0)  { 
