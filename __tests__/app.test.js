@@ -32,6 +32,11 @@ describe.only('/api', () => {
             return request(app)
             .get("/api/topics")
             .expect(200)
+            .then(res=>{
+                const topics=res.body.topics;
+                expect(Array.isArray(topics)).toBe(true)
+                expect(typeof topics[0].description).toBe("string")
+            });
         });
     });
     describe('GET /users/:username', () => {
