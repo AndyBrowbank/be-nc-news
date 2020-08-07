@@ -1,7 +1,8 @@
 process.env.NODE_ENV = "test";
 const app = require("../app");
 const request = require("supertest");
-const connection = require("../db/connection")
+const connection = require("../db/connection");
+const topicsRouter = require("../routes/topics.router");
 
 describe.only('/api', () => {
     beforeEach(() => {
@@ -16,7 +17,7 @@ describe.only('/api', () => {
           .get("/api/articles")
           .expect(200)
           .then(res=>{
-              const articles=res.body.articles;
+              const articles=res.body.articles; 
               expect(Array.isArray(articles)).toBe(true)
               expect(typeof articles[0].author).toBe("string")
               expect(res.body.articles).toEqual(expect.arrayContaining([expect.objectContaining(
@@ -33,10 +34,11 @@ describe.only('/api', () => {
             .get("/api/topics")
             .expect(200)
             .then(res=>{
-                const topics=res.body.topics;
+                const topics = res.body.topics
                 expect(Array.isArray(topics)).toBe(true)
+                expect(typeof topics[0].slug).toBe("string")
                 expect(typeof topics[0].description).toBe("string")
-            });
+            })
         });
     });
     describe('GET /users/:username', () => {
@@ -79,7 +81,14 @@ describe.only('/api', () => {
                 expect(article).toHaveProperty('comment_count')
             })
         })
+        test('GET: returns 404  when article_id not found', () => {
+            return request(app)
+            .get('/api/articles/999999')
+            .expect(404)
+            .then(({body: {msg}}) => {
+              expect(msg).toEqual('404 bad request');
+            })
     })
 })
 
-    
+});   
