@@ -2,7 +2,7 @@ process.env.NODE_ENV = "test";
 const app = require("../app");
 const request = require("supertest");
 const connection = require("../db/connection");
-const topicsRouter = require("../routes/topics.router");
+ 
 
 describe.only('/api', () => {
     beforeEach(() => {
@@ -65,7 +65,7 @@ describe.only('/api', () => {
             })
         }); 
     });
-    describe('GET /api/articles/:article_id', () => {
+    describe('/api/articles/:article_id', () => {
         test('returns 200 and article object with required properties', () => {
             return request(app)
             .get('/api/articles/1')
@@ -89,6 +89,30 @@ describe.only('/api', () => {
               expect(msg).toEqual('404 bad request');
             })
     })
+    test('PATCH: returns a 200 and object with updated article inc updated votes', () => {
+        return request(app)
+        .patch("/api/articles/1")
+        .send({ inc_votes: 10})
+        .expect(200)
+        .then(res=>{
+            console.log("res PATCH app.test.js = " + res)
+            const votes = res.body.votes
+            expect(votes).toBe(110) // expect votes to be increased by 10
+
+        });
+    });
+    test('PATCH: returns a 400 if invalid value passed to adjust votes', () => {
+        return request(app)
+        .patch("/api/articles/1")
+        .send({ inc_votes: 'invalid_value'})
+        .expect(400)
+        .then(res=>{
+            const votes = res.body.votes
+            expect(votes).toBe(100) // expect votes unchanged
+            expect(res.body).toEqual({msg: "invalid data type!"})
+
+        });
+    });
 })
 
 });   
